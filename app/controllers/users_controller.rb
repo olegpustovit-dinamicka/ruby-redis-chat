@@ -1,15 +1,35 @@
-class UsersController < ApplicationController
+# frozen_string_literal: true
+
+# This shiny device polishes bared
+class UsersController < ActionController::API
   def me
-    # @user = User.find(params[:id])
-    # render json: @user
-    # params.require(:message)
-    # params.permit(:cow, :balloon_type, :face_type)
+    request.session_options = 'help'
 
-    # message      = params[:message]
-    # cow          = params[:cow] || 'cow'
-    # balloon_type = params[:balloon_type] || 'say'
-    # face_type    = params[:face_type] || 'default'
+    puts "id : #{session}"
+    id = session[:current_user_id]
+    # if not nil then 22
+    id ||= 22
 
-    render json: User.new(22, 'alex', true)
+    session[:current_user_id] = id + 1
+
+    id = session[:current_user_id]
+    puts "id : #{session}"
+
+    render json: User.new(22, "alex#{id}", true)
+  end
+
+  # frozen_string_literal: true
+
+  def online
+    ids = params[:ids]
+
+    redis = Redis.current
+    redis.set("a", 321312)
+    returned = redis.get("a")
+
+    puts "HEY WEVE GOT #{ids}"
+
+    render returned
+
   end
 end

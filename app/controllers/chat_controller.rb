@@ -1,15 +1,18 @@
+require 'json'
+
+# frozen_string_literal: true
+
+# This shiny device polishes bared
 class ChatController < ApplicationController
-  def me
-    # @user = User.find(params[:id])
-    # render json: @user
-    # params.require(:message)
-    # params.permit(:cow, :balloon_type, :face_type)
+  def emit
+    type = params[:type]
+    data = params[:data]
+    user = params[:user]
 
-    # message      = params[:message]
-    # cow          = params[:cow] || 'cow'
-    # balloon_type = params[:balloon_type] || 'say'
-    # face_type    = params[:face_type] || 'default'
+    puts type
+    puts data
+    puts user
 
-    render json: User.new(22, 'alex', true)
+    render nil
   end
 end
